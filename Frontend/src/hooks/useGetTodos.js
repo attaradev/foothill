@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CustomErrorAlert } from "../utils/general.js";
+import { baseURL, CustomErrorAlert } from "../utils/general.js";
 
 const useGetTodos = (setTodos, setNumOfPages, setPage) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -8,7 +8,7 @@ const useGetTodos = (setTodos, setNumOfPages, setPage) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://fullstack-todolist-upnv.onrender.com/todos?page=${page}&limit=${limit}`
+        `${baseURL}/api/todos?page=${page}&limit=${limit}`
       );
       const data = await response.json();
       setTodos(data.todos);

@@ -1,20 +1,11 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { defaultTodo } from "../../utils/general.js";
 import useAddTodo from "../../hooks/useAddTodo.js";
-import axios from "axios";
 
 const AddTodoForm = ({ fetchTodos, page, limit }) => {
-  // let [newTodo, setNewTodo] = useState(defaultTodo);
-  let [newTodo, setNewTodo] = useState({
-    "title": "",
-    "description": "",
-    "activity": "",
-    "date": "",
-    "strStatus": ""
-  });
-
+  const [newTodo, setNewTodo] = useState(defaultTodo);
   const { addTodo, isAddingTodo } = useAddTodo(
     fetchTodos,
     page,
@@ -22,27 +13,22 @@ const AddTodoForm = ({ fetchTodos, page, limit }) => {
     setNewTodo
   );
 
-  let isValidateInputs =
-    newTodo.title.length < 10 || newTodo.description.length < 15;
+  const isValid = () =>
+    newTodo.title.trim().length >= 10 &&
+    newTodo.description.trim().length >= 15;
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      const resp1 = await addTodo({ ...newTodo });
-      console.log("newTodo display");
-
-      const resp = axios.post("http://localhost:3000/api/todos", newTodo);
-      console.log(resp);
-    }
-    catch (ex) {
-      console.log("catch me ", ex);
-      // console.log(ex);
-    }
+    e.preventDefault();
+    if (!isValid()) return;
+    await addTodo(newTodo);
   };
 
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      autoComplete="off"
       sx={{
         display: "flex",
         alignItems: "flex-start",
@@ -50,9 +36,6 @@ const AddTodoForm = ({ fetchTodos, page, limit }) => {
         height: "70px",
         gap: 4,
       }}
-      noValidate
-      autoComplete="off"
-      onSubmit={handleSubmit}
     >
       <TextField
         id="title"
@@ -60,16 +43,18 @@ const AddTodoForm = ({ fetchTodos, page, limit }) => {
         label="Todo Title"
         variant="outlined"
         value={newTodo.title}
-        onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
-        error={newTodo.title.length > 0 && newTodo.title.length < 10}
+        onChange={(e) =>
+          setNewTodo({ ...newTodo, title: e.target.value })
+        }
+        error={
+          newTodo.title.length > 0 && newTodo.title.trim().length < 10
+        }
         helperText={
-          newTodo.title.length > 0 && newTodo.title.length < 10
+          newTodo.title.length > 0 && newTodo.title.trim().length < 10
             ? "Title must be at least 10 characters"
             : ""
         }
-        sx={{
-          width: "30%",
-        }}
+        sx={{ width: "30%" }}
       />
       <TextField
         id="description"
@@ -81,23 +66,23 @@ const AddTodoForm = ({ fetchTodos, page, limit }) => {
           setNewTodo({ ...newTodo, description: e.target.value })
         }
         error={
-          newTodo.description.length > 0 && newTodo.description.length < 15
+          newTodo.description.length > 0 &&
+          newTodo.description.trim().length < 15
         }
         helperText={
-          newTodo.description.length > 0 && newTodo.description.length < 15
+          newTodo.description.length > 0 &&
+          newTodo.description.trim().length < 15
             ? "Description must be at least 15 characters"
             : ""
         }
-        sx={{
-          flexGrow: 1,
-        }}
+        sx={{ flexGrow: 1 }}
       />
       <LoadingButton
         loading={isAddingTodo}
         variant="contained"
         size="large"
         type="submit"
-        disabled={isValidateInputs}
+        disabled={!isValid()}
         sx={{
           p: "14px",
           boxShadow:

@@ -7,10 +7,21 @@ const initApp = async (app, express) => {
     origin: "*",
     optionsSuccessStatus: 200,
   };
-  connectDb();
+
+  // Middleware
   app.use(cors(corsOptions));
   app.use(express.json());
-  app.use("/todos", todoRouter);
+
+  // Health check route
+  app.get("/", (_req, res) => {
+    res.status(200).json({ status: "ok", message: "Todo API is running" });
+  });
+
+  // Routes
+  app.use("/api/todos", todoRouter);
+
+  // Connect to DB
+  await connectDb();
 };
 
 export default initApp;

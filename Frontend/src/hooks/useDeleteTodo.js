@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CustomErrorAlert } from "../utils/general.js";
+import { baseURL, CustomErrorAlert } from "../utils/general.js";
 
 const useDeleteTodo = (fetchTodos, page, limit) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +9,7 @@ const useDeleteTodo = (fetchTodos, page, limit) => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://fullstack-todolist-upnv.onrender.com/todos/${id}`,
+        `${baseURL}/api/todos/${id}`,
         {
           method: "DELETE",
           headers: {

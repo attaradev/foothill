@@ -5,36 +5,140 @@
 
 # Full-Stack Todo List Application
 
-This repository hosts a full-stack Todo List application designed to allow users to create, manage, and organize their tasks efficiently. The application features a React-based frontend and a Node.js backend, utilizing MongoDB for data persistence.
+This repository hosts a containerized full-stack **Todo List application** that allows users to create, manage, and organize tasks. It follows a **3-tier architecture** with:
 
-## Technologies Used
+* A React-based frontend
+* A Node.js/Express backend
+* A MongoDB database
 
-- **Frontend**: React, Material-UI
-- **Backend**: Node.js, Express
-- **Database**: MongoDB
-- **Other Tools**: Vite, React Toastify, Lucide Icons
+> Fully containerized with **Docker** and orchestrated using **Docker Compose**.
 
-## Project Structure
+---
 
-The project is divided into two main parts:
-- **Frontend**: Located in the `frontend/` directory with its own [README](frontend/README.md).
-- **Backend**: Located in the `backend/` directory with its own [README](backend/README.md).
+## 🚀 Technologies Used
 
-## Features
+| Layer    | Stack                                            |
+| -------- | ------------------------------------------------ |
+| Frontend | React, Vite, Material-UI, Toastify, Lucide Icons |
+| Backend  | Node.js, Express, Mongoose                       |
+| Database | MongoDB                                          |
+| Tools    | Docker, Docker Compose                           |
 
-- Create, view, update, and delete todo items.
-- Organize tasks with tags/categories.
-- Responsive user interface adaptable to different screen sizes.
-- Real-time updates without page reloads.
+---
 
-## Contributing
+## 📁 Project Structure
 
-Contributions are welcome! See the specific README files in the `frontend/` and `backend/` directories for more details on contributing.
+```
+FootHill/
+├── Frontend/               # React + Vite frontend (served via NGINX)
+│   └── Dockerfile
+├── Backend/                # Node.js + Express backend (API server)
+│   └── Dockerfile
+├── docker-compose.yml      # Multi-service orchestrator
+└── README.md               # You are here
+```
 
-## Live Demo
+---
 
-<h4 align="left">Live Preview is available at https://fullstack-todolist-1.onrender.com/</h4>
+## ✨ Features
 
-## Snapshots
+* ✅ Add, update, delete and list todos
+* 🔍 Search + pagination support
+* 🎨 Responsive user interface adaptable to different screen sizes
+* ⚡ Real-time updates without page reloads
+* 🐳 Full Docker-based setup for dev/ops
 
-<img src="./Frontend/src/assets/home-snapshot.png" alt="home page"/>
+---
+
+## 🧰 Setup & Run (Dockerized)
+
+### 🔧 Prerequisites
+
+* [Docker](https://docs.docker.com/get-docker/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+### 📦 Build and Start Containers
+
+```bash
+docker compose up --build
+```
+
+> This command builds the backend and frontend images, creates containers, and starts the MongoDB service with volume persistence.
+
+### 🛑 Stop Services
+
+```bash
+docker compose down
+```
+
+---
+
+## 🔗 Access URLs
+
+| Service       | URL                                                                |
+| ------------- | ------------------------------------------------------------------ |
+| Frontend      | [http://localhost:8080](http://localhost:8080)                     |
+| Backend API   | [http://localhost:3000/api/todos](http://localhost:3000/api/todos) |
+| MongoDB (CLI) | mongodb://localhost:27017                                          |
+
+---
+
+## 🔐 Environment Variables
+
+Set automatically via `docker-compose.yml`:
+
+* **Backend**:
+
+  * `MONGO_URI=mongodb://database:27017`
+* **Frontend**:
+
+  * `VITE_API_BASE_URL=http://api:3000`
+
+---
+
+## 🧪 Testing the Setup
+
+Use the script below to test containers:
+
+```bash
+#!/bin/bash
+echo "🔍 Running container tests for FootHill..."
+
+echo "📦 Checking MongoDB..."
+docker exec database mongosh --eval 'db.runCommand({ ping: 1 })' &>/dev/null && echo "✅ MongoDB OK" || echo "❌ MongoDB FAILED"
+
+echo "🌐 Checking Backend..."
+curl -s http://localhost:3000/api/todos | grep -q "todos" && echo "✅ Backend OK" || echo "❌ Backend FAILED"
+
+echo "🖥️ Checking Frontend..."
+curl -s http://localhost:8080 | grep -iq "<!doctype html>" && echo "✅ Frontend OK" || echo "❌ Frontend FAILED"
+```
+
+Make executable:
+
+```bash
+chmod +x test.sh && ./test.sh
+```
+
+---
+
+## 🧑‍💻 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first.
+
+Check:
+
+* [`Frontend/README.md`](./Frontend/README.md)
+* [`Backend/README.md`](./Backend/README.md)
+
+---
+
+## 📷 Snapshots
+
+<img src="./Frontend/src/assets/home-snapshot.png" alt="Home Page" width="100%" />
+
+---
+
+## 🌐 Live Demo
+
+➡️ [https://fullstack-todolist-1.onrender.com](https://fullstack-todolist-1.onrender.com)
