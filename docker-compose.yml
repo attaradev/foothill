@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - foothill-network
+      - app-network
 
   # Express API service
   api:
@@ -27,12 +27,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://database:27017
+      - MONGO_URI=mongodb://database:27017/foothill-db
     depends_on:
       database:
         condition: service_healthy
     networks:
-      - foothill-network
+      - app-network
 
   # React Web UI
   web:
@@ -47,11 +47,12 @@ services:
     depends_on:
       - api
     networks:
-      - foothill-network
+      - app-network
 
 volumes:
   mongo-data:
 
 networks:
-  foothill-network:
+  app-network:
+    name: foothill-app
     driver: bridge
