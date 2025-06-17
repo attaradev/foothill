@@ -13,8 +13,6 @@ This repository hosts a containerized full-stack **Todo List application** that 
 
 > Fully containerized with **Docker** and orchestrated using **Docker Compose**.
 
----
-
 ## 🚀 Technologies Used
 
 | Layer    | Stack                                            |
@@ -23,8 +21,6 @@ This repository hosts a containerized full-stack **Todo List application** that 
 | Backend  | Node.js, Express, Mongoose                       |
 | Database | MongoDB                                          |
 | Tools    | Docker, Docker Compose                           |
-
----
 
 ## 📁 Project Structure
 
@@ -38,8 +34,6 @@ FootHill/
 └── README.md               # You are here
 ```
 
----
-
 ## ✨ Features
 
 * ✅ Add, update, delete and list todos
@@ -47,8 +41,6 @@ FootHill/
 * 🎨 Responsive user interface adaptable to different screen sizes
 * ⚡ Real-time updates without page reloads
 * 🐳 Full Docker-based setup for dev/ops
-
----
 
 ## 🧰 Setup & Run (Dockerized)
 
@@ -71,8 +63,6 @@ docker compose up --build
 docker compose down
 ```
 
----
-
 ## 🔗 Access URLs
 
 | Service       | URL                                                                |
@@ -80,8 +70,6 @@ docker compose down
 | Frontend      | [http://localhost:8080](http://localhost:8080)                     |
 | Backend API   | [http://localhost:3000/api/todos](http://localhost:3000/api/todos) |
 | MongoDB (CLI) | mongodb://localhost:27017                                          |
-
----
 
 ## 🔐 Environment Variables
 
@@ -93,8 +81,6 @@ Set automatically via `docker-compose.yml`:
 * **Frontend**:
 
   * `VITE_API_BASE_URL=http://api:3000`
-
----
 
 ## 🧪 Testing the Setup
 
@@ -120,8 +106,6 @@ Make executable:
 chmod +x test.sh && ./test.sh
 ```
 
----
-
 ## 🧑‍💻 Contributing
 
 Pull requests are welcome! For major changes, please open an issue first.
@@ -131,13 +115,9 @@ Check:
 * [`Frontend/README.md`](./Frontend/README.md)
 * [`Backend/README.md`](./Backend/README.md)
 
----
-
 ## 📷 Snapshots
 
 <img src="./Frontend/src/assets/home-snapshot.png" alt="Home Page" width="100%" />
-
----
 
 ## 🌐 Live Demo
 
